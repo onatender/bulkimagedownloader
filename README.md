@@ -22,7 +22,9 @@ To get started, you'll need a Flickr API key. Acquiring one is straightforward. 
 1. Clone this repository to your local machine.
 2. Install the required dependencies using `pip install -r requirements.txt`.
 3. Obtain your Flickr API key as mentioned above.
-4. Run the script and follow the prompts to download your desired images.
+4. Run the script and follow the prompts to download your desired images.  
 
+## Disclaimer  
+"This program is designed to assist users in quickly downloading Flickr images. Respecting the privacy rights of users is important. This program is committed to protecting user privacy in accordance with the Flickr Privacy Policy. Unauthorized downloading or sharing of any image without the user's permission is prohibited. The user is solely responsible for the use of this program."
 ![image](https://github.com/onatender/bulkimagedownloader/assets/152275242/851ab0e0-36fc-476a-aa2a-60b1db3f719e)
 
