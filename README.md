@@ -24,3 +24,5 @@ To get started, you'll need a Flickr API key. Acquiring one is straightforward. 
 3. Obtain your Flickr API key as mentioned above.
 4. Run the script and follow the prompts to download your desired images.
 
+![image](https://github.com/onatender/bulkimagedownloader/assets/152275242/851ab0e0-36fc-476a-aa2a-60b1db3f719e)
+
