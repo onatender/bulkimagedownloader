@@ -1,4 +1,6 @@
 import json
+import threading
+import time
 import requests
 import os
 
@@ -28,9 +30,12 @@ def get_max_resolution(photo):
             return photo[f"url_{resolution}"]
 
 def download_photo(link, path):
-    getphoto = requests.get(link).content
-    with open(path, "wb") as file:
-        file.write(getphoto)
+    try:
+        getphoto = requests.get(link).content
+        with open(path, "wb") as file:
+            file.write(getphoto)
+    except:
+        pass
 
 
 def create_folder(path):
@@ -39,6 +44,7 @@ def create_folder(path):
     if not os.path.exists(folder):
         os.mkdir(folder)
 
+threads = []
 
 def download_all_photos(photos, page, perpage):
     global photo_id
@@ -46,12 +52,19 @@ def download_all_photos(photos, page, perpage):
     for photo in photos:
         link = get_max_resolution(photo)
         path = f"{folder}/{photo_id}.{get_extension(link)}"
-        download_photo(link, path)
-        print(
-            f"{path} downloaded. page={page} & per_page={perpage} & photo_index={photo_index}"
-        )
-        photo_id += 1
+        thread = threading.Thread(target=dfoto_thr, args=(link,path,page,perpage,photo_index,))
+        thread.start()
+        threads.append(thread)
         photo_index += 1
+        photo_id += 1
+
+
+def dfoto_thr(link,path,page,perpage,photo_index):
+    download_photo(link, path)
+    print(
+        f"{path} downloaded. page={page} & per_page={perpage} & photo_index={photo_index}"
+    )
+
 
 
 def check_count():
@@ -141,14 +154,19 @@ params = {
 
 api_key = input("Flickr Api Key:")
 obj = input("What do you want to download? :")
-cnt = int(input("How many do you want to download? :"))
+cnt = int(input("How many do you want to download? :"))+1
+tstart = time.time()
 set_queries(obj,cnt,api_key)
 create_folder(folder)
 set_resolution_limits('url_sq','url_l')
 check_count()
 tofetch = seperate(howmany)
 download_fetchlist(tofetch)
-print("All images has been downloaded.")
+
+for thread in threads:
+    thread.join()
+
+print("All images has been downloaded in ",time.time()-tstart)
 
 
 
